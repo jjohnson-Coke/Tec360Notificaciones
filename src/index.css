@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan: #00a9ce;
+  /* Variante del cian para texto pequeño sobre fondos claros (contraste AA ≥ 4.5:1). */
+  --cyan-text: #00799a;
+  --aqua: #1dd2dd;
+  --violet: #7880cc;
+  --navy: #1a2340;
+  --ink: #111111;
+  --slate: #596273;
+  --mist: #f3f4f6;
+  --ice: #ddebf7;
+  --line: #e2e5eb;
+
+  --pad-x: clamp(1.25rem, 5vw, 5.5rem);
+  --pad-top: clamp(3.75rem, 9vh, 5.5rem);
+  --pad-bottom: clamp(5.5rem, 12vh, 6.5rem);
+  --chrome-h: 4.5rem;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--navy);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  em {
+    font-style: italic;
+  }
+  :focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .deck {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--mist);
+    touch-action: pan-y;
+  }
+
+  .slide-scroll {
+    position: absolute;
+    inset: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .slide-inner {
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+    max-width: 92rem;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: clamp(0.72rem, 0.55rem + 0.45vw, 0.95rem);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .slide-title {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+    font-size: clamp(2rem, min(4.6vw, 8.4vh), 4.5rem);
+    text-wrap: balance;
+  }
+
+  .card {
+    position: relative;
+    border-radius: 1.75rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(17, 17, 17, 0.04),
+      0 18px 40px -24px rgba(26, 35, 64, 0.28);
+  }
+
+  .icon-badge {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--aqua) 100%);
+    box-shadow: 0 10px 22px -12px rgba(0, 169, 206, 0.9);
+  }
+
+  .body-text {
+    font-size: clamp(0.95rem, 0.82rem + 0.35vw, 1.15rem);
+    line-height: 1.55;
+  }
+}
