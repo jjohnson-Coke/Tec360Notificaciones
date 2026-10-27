@@ -10,6 +10,17 @@ export function VideoSlide({ data }: { data: VideoData }) {
   const ref = useRef<HTMLVideoElement>(null);
   const isPresent = useIsPresent();
 
+  // Arranca solo al entrar. Los navegadores sólo permiten autoplay sin sonido,
+  // así que inicia silenciado; el audio se activa desde los controles.
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {
+      // Si el navegador lo bloquea (p. ej. modo ahorro de batería), queda el botón de play.
+    });
+  }, []);
+
   // Pausa en cuanto la slide empieza a salir (y al desmontarse).
   useEffect(() => {
     const video = ref.current;
@@ -36,7 +47,10 @@ export function VideoSlide({ data }: { data: VideoData }) {
                 poster={data.poster}
                 controls
                 playsInline
-                preload="metadata"
+                muted
+                autoPlay
+                loop
+                preload="auto"
                 aria-label={data.videoLabel}
                 data-nav-lock
                 onKeyDown={(e) => {

@@ -232,15 +232,49 @@ export function Deck() {
       {/* En mobile, un degradado bajo los controles evita que se encimen con el texto al hacer scroll. */}
       {fade && (
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 md:hidden"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-36 md:hidden"
           style={{ background: `linear-gradient(to bottom, ${fade}00, ${fade}f2 55%)` }}
           aria-hidden="true"
         />
       )}
 
+      {/* Puntos: salto directo a cualquier slide */}
+      <nav
+        className="absolute inset-x-0 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-30 flex justify-center md:bottom-[max(1.4rem,env(safe-area-inset-bottom))] md:left-1/2 md:right-auto md:-translate-x-1/2"
+        aria-label={ui.dotsLabel}
+      >
+        <ol className={`flex items-center rounded-full border px-1.5 backdrop-blur-md ${chromeBtn}`}>
+          {slides.map((s, i) => {
+            const active = i === index;
+            return (
+              <li key={i}>
+                <button
+                  type="button"
+                  onClick={() => goTo(i)}
+                  className="group flex h-8 min-w-[1.6rem] items-center justify-center rounded-full px-[3px]"
+                  aria-label={ui.goTo(i + 1, s.announce)}
+                  aria-current={active ? 'step' : undefined}
+                  title={ui.goTo(i + 1, s.announce)}
+                  data-testid="dot"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`block h-2 rounded-full transition-all duration-300 ${
+                      active
+                        ? 'w-5 bg-cyan'
+                        : `w-2 ${dark ? 'bg-white/45 group-hover:bg-white/80' : 'bg-slate/35 group-hover:bg-slate/70'}`
+                    }`}
+                  />
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+
       {/* Controles inferiores */}
       <nav
-        className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-30 flex items-center gap-2"
+        className="absolute bottom-[calc(max(0.5rem,env(safe-area-inset-bottom))+2.75rem)] right-[max(1rem,env(safe-area-inset-right))] z-30 flex items-center gap-2 md:bottom-[max(1rem,env(safe-area-inset-bottom))]"
         aria-label={ui.deckLabel}
       >
         <button type="button" className={`${btnBase} ${chromeBtn}`} onClick={prev} disabled={index === 0} aria-label={ui.prev}>

@@ -189,6 +189,8 @@ export const ui = {
   fullscreenExit: 'Salir de pantalla completa',
   progressLabel: 'Progreso de la presentación',
   announce: (n: number, total: number, title: string) => `Slide ${n} de ${total}: ${title}`,
+  dotsLabel: 'Ir a una slide',
+  goTo: (n: number, title: string) => `Ir a la slide ${n}: ${title}`,
 };
 
 export const slides: SlideData[] = [

@@ -21,6 +21,13 @@
   --chrome-h: 4.5rem;
 }
 
+@media (max-width: 767px) {
+  :root {
+    /* En mobile, los puntos van en una fila propia debajo de los controles. */
+    --pad-bottom: 8.5rem;
+  }
+}
+
 @layer base {
   html,
   body,
