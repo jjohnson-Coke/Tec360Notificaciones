@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tec360notificaciones",
+  "compatibility_date": "2026-10-01",
+  // Sitio estático: Wrangler compila con Vite y publica dist/ (sin código de Worker).
+  "build": {
+    "command": "npm run build"
+  },
+  "assets": {
+    "directory": "./dist"
+  }
+}
