@@ -1,68 +1,66 @@
-import { useId } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { ClosingSlide as ClosingData } from '../content/slides';
 import { SlideFrame } from '../components/SlideFrame';
-import { easeInOut, useReduced } from '../motion';
+import { useReduced } from '../motion';
+
+/** Bordes difuminados: el recuadro del video se funde con el fondo aunque el color varíe un poco al decodificar. */
+const softEdges = 'radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%)';
 
 export function ClosingSlide({ data }: { data: ClosingData }) {
   const reduce = useReduced();
-  const id = useId().replace(/:/g, '');
-  // Un arco que entra desde fuera y se cierra en un círculo completo (el "360").
-  const ring = 'M 200 20 A 180 180 0 1 1 199.9 20';
-  const tail = 'M -260 330 C -120 250, 40 40, 200 20';
+  const ref = useRef<HTMLVideoElement>(null);
+  const [blocked, setBlocked] = useState(false);
+  const showStill = reduce || blocked;
+
+  // Se reproduce una vez cada vez que se entra a la slide y queda en el último cuadro.
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || showStill) return;
+    video.muted = true;
+    video.currentTime = 0;
+    video.play().catch(() => setBlocked(true));
+  }, [showStill]);
 
   return (
-    <SlideFrame tone="dark" arc="none" background="bg-black text-white" innerClassName="items-center">
-      <div className="relative flex aspect-square w-[min(78vw,58vh,30rem)] items-center justify-center">
-        <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id={`ring-${id}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="var(--cyan)" />
-              <stop offset="50%" stopColor="var(--aqua)" />
-              <stop offset="100%" stopColor="var(--violet)" />
-            </linearGradient>
-          </defs>
-          <motion.path
-            d={tail}
-            fill="none"
-            stroke={`url(#ring-${id})`}
-            strokeWidth={14}
-            strokeLinecap="round"
-            initial={{ pathLength: reduce ? 1 : 0, opacity: reduce ? 0 : 0.9 }}
-            animate={reduce ? { opacity: 0 } : { pathLength: [0, 1, 1], opacity: [0.9, 0.9, 0] }}
-            transition={reduce ? { duration: 0 } : { duration: 1.6, times: [0, 0.45, 1], ease: easeInOut, delay: 0.2 }}
-          />
-          <motion.path
-            d={ring}
-            fill="none"
-            stroke={`url(#ring-${id})`}
-            strokeWidth={14}
-            strokeLinecap="round"
-            initial={{ pathLength: reduce ? 1 : 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={
-              reduce
-                ? { duration: 0.3 }
-                : { pathLength: { duration: 1.4, ease: easeInOut, delay: 0.85 }, opacity: { duration: 0.1, delay: 0.85 } }
-            }
-          />
-        </svg>
-        <motion.img
-          src={data.logo}
-          alt={data.logoAlt}
-          width={290}
-          height={70}
-          className="relative h-auto w-[62%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: reduce ? 0.3 : 1.1, delay: reduce ? 0 : 1.9 }}
-        />
+    <SlideFrame
+      tone="light"
+      arc="none"
+      background="text-ink"
+      backdrop={<div className="absolute inset-0" style={{ backgroundColor: data.background }} aria-hidden="true" />}
+      innerClassName="items-center"
+    >
+      {/* En mobile el video se amplía (los costados están vacíos) y el sobrante se recorta aquí. */}
+      <div className="flex w-full justify-center overflow-hidden">
+        <div
+          className="relative w-[140vw] max-w-none shrink-0 md:w-[min(100%,calc((100dvh-12rem)*16/9),68rem)]"
+          style={{ maskImage: softEdges, WebkitMaskImage: softEdges }}
+        >
+          {showStill ? (
+            <img src={data.finalFrame} alt="" className="block aspect-video h-auto w-full" draggable={false} />
+          ) : (
+            <video
+              ref={ref}
+              className="block aspect-video h-auto w-full"
+              src={data.video}
+              poster={data.poster}
+              muted
+              playsInline
+              autoPlay
+              preload="auto"
+              disablePictureInPicture
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+          )}
+          <span className="sr-only">{data.logoAlt}</span>
+        </div>
       </div>
       <motion.p
-        className="mt-[clamp(1.5rem,5vh,3rem)] text-[clamp(0.95rem,1.3vw,1.2rem)] font-medium tracking-[0.06em] text-white/85"
+        className="-mt-[clamp(0.5rem,4vh,2.5rem)] text-[clamp(0.95rem,1.3vw,1.2rem)] font-medium tracking-[0.06em] text-slate"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: reduce ? 0.3 : 0.8, delay: reduce ? 0 : 2.4 }}
+        transition={{ duration: reduce ? 0.3 : 0.8, delay: reduce ? 0 : 1.5 }}
       >
         {data.text}
       </motion.p>

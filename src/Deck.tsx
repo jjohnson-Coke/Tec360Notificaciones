@@ -20,7 +20,7 @@ const TRANSITION_MS = 500;
 const NAV_LOCK_MS = 420;
 const SWIPE_THRESHOLD = 50;
 /** Color del degradado bajo los controles en mobile (igual al fondo de la slide). */
-const FADE_COLORS: Partial<Record<SlideData['kind'], string>> = { cta: '#1A2340', closing: '#000000' };
+const FADE_COLORS: Partial<Record<SlideData['kind'], string>> = { cta: '#1A2340', closing: '#FEFEFE' };
 
 type Renderers = { [K in SlideData['kind']]: ComponentType<{ data: Extract<SlideData, { kind: K }> }> };
 const renderers: Renderers = {

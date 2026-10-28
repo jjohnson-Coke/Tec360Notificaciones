@@ -163,7 +163,14 @@ export interface VideoSlide extends SlideBase {
 
 export interface ClosingSlide extends SlideBase {
   kind: 'closing';
-  logo: string;
+  /** Animación del logotipo (se reproduce una vez, sin sonido). */
+  video: string;
+  /** Primer cuadro del video (se ve mientras carga). */
+  poster: string;
+  /** Último cuadro: se muestra fijo con movimiento reducido o si el navegador bloquea el video. */
+  finalFrame: string;
+  /** Color de fondo del video, para que se funda con la slide. */
+  background: string;
   logoAlt: string;
   text: string;
 }
@@ -409,9 +416,12 @@ export const slides: SlideData[] = [
   {
     kind: 'closing',
     announce: 'Cierre',
-    tone: 'dark',
+    tone: 'light',
     arc: 'none',
-    logo: asset('tec360-logo.png'),
+    video: asset('tec360-cierre.mp4'),
+    poster: asset('tec360-cierre-poster.jpg'),
+    finalFrame: asset('tec360-cierre-final.jpg'),
+    background: '#FEFEFE',
     logoAlt: 'TEC360',
     text: 'TEC360 · 2026®',
   },
