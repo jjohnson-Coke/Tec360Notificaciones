@@ -203,10 +203,10 @@ export const ui = {
 export const slides: SlideData[] = [
   {
     kind: 'cover',
-    announce: 'Estrategia de notificaciones',
+    announce: 'Estrategia de notificaciones del Ecosistema de Aprendizaje',
     tone: 'dark',
     arc: 'cover',
-    titleLines: ['Estrategia de', 'notificaciones'],
+    titleLines: ['Estrategia de notificaciones', 'del Ecosistema de Aprendizaje'],
     image: asset('portada.jpg'),
     imageAlt: 'Dos personas trabajan juntas frente a una laptop, sentadas en un sillón azul.',
     logo: asset('tec360-logo.png'),

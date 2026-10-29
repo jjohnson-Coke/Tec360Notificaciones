@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import type { CoverSlide as CoverData } from '../content/slides';
 import { SlideFrame } from '../components/SlideFrame';
@@ -32,22 +33,27 @@ export function CoverSlide({ data }: { data: CoverData }) {
 
   return (
     <SlideFrame tone="dark" arc={data.arc} background="bg-navy text-white" backdrop={backdrop} innerClassName="!justify-end">
-      <h1 className="font-extrabold leading-[0.98] tracking-[-0.035em] text-white" style={{ fontSize: 'clamp(3rem, min(9vw, 15vh), 8.5rem)' }}>
+      <h1
+        className="font-extrabold leading-[0.98] tracking-[-0.035em] text-white"
+        style={{ fontSize: 'clamp(2.4rem, min(5.4vw, 10.5vh), 6.25rem)' }}
+      >
         {words.map((line, li) => (
           <span key={li} className="block">
             {line.map((word, wi) => {
               const i = wordIndex++;
               return (
-                <motion.span
-                  key={wi}
-                  className="inline-block"
-                  initial={{ opacity: 0, y: reduce ? 0 : '0.45em' }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={reduce ? { duration: 0.25 } : { duration: 0.8, ease: easeOut, delay: 0.45 + i * 0.22 }}
-                >
-                  {word}
-                  {wi < line.length - 1 && ' '}
-                </motion.span>
+                <Fragment key={wi}>
+                  <motion.span
+                    className="inline-block"
+                    initial={{ opacity: 0, y: reduce ? 0 : '0.45em' }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={reduce ? { duration: 0.25 } : { duration: 0.8, ease: easeOut, delay: 0.45 + i * 0.14 }}
+                  >
+                    {word}
+                  </motion.span>
+                  {/* Espacio normal fuera del bloque: permite que el título se acomode en mobile. */}
+                  {wi < line.length - 1 && ' '}
+                </Fragment>
               );
             })}
           </span>
@@ -57,7 +63,7 @@ export function CoverSlide({ data }: { data: CoverData }) {
         className="mt-[clamp(1.5rem,5vh,3rem)] flex items-center gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: reduce ? 0.25 : 0.8, delay: reduce ? 0 : 1.3 }}
+        transition={{ duration: reduce ? 0.25 : 0.8, delay: reduce ? 0 : 1.6 }}
       >
         <img src={data.logo} alt={data.logoAlt} width={290} height={70} className="h-auto w-[clamp(7.5rem,13vw,11rem)]" />
         <span className="text-[clamp(0.9rem,1.2vw,1.1rem)] font-medium text-white/90">{data.footer}</span>
