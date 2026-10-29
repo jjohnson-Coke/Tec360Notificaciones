@@ -303,14 +303,14 @@ export const slides: SlideData[] = [
         stage: 'arranque',
         title: '*Kickoff* de estrategia',
         description: 'Dar a conocer el paso a paso para desarrollar la estrategia y lo que necesitamos de cada actor.',
-        date: '30 de octubre de 2026',
+        date: '29 de octubre de 2026',
       },
       {
         n: 2,
         stage: 'diagnostico',
         title: 'Sesiones por equipo',
         description: 'Sacar la “radiografía” de cada equipo involucrado: conocer por qué y cómo envían sus correos.',
-        date: '1 al 15 de noviembre de 2026',
+        date: '5 al 15 de noviembre de 2026',
       },
       {
         n: 3,
