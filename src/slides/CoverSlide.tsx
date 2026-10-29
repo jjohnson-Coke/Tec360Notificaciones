@@ -65,7 +65,13 @@ export function CoverSlide({ data }: { data: CoverData }) {
         animate={{ opacity: 1 }}
         transition={{ duration: reduce ? 0.25 : 0.8, delay: reduce ? 0 : 1.6 }}
       >
-        <img src={data.logo} alt={data.logoAlt} width={290} height={70} className="h-auto w-[clamp(7.5rem,13vw,11rem)]" />
+        <img
+          src={data.logo}
+          alt={data.logoAlt}
+          width={data.logoSize.width}
+          height={data.logoSize.height}
+          className="h-auto w-[clamp(10rem,17vw,15rem)]"
+        />
         <span className="text-[clamp(0.9rem,1.2vw,1.1rem)] font-medium text-white/90">{data.footer}</span>
       </motion.div>
     </SlideFrame>

@@ -60,6 +60,8 @@ export interface CoverSlide extends SlideBase {
   imageAlt: string;
   logo: string;
   logoAlt: string;
+  /** Tamaño intrínseco del logotipo (evita saltos de layout al cargar). */
+  logoSize: { width: number; height: number };
   footer: string;
 }
 
@@ -209,8 +211,9 @@ export const slides: SlideData[] = [
     titleLines: ['Estrategia de notificaciones', 'del Ecosistema de Aprendizaje'],
     image: asset('portada.jpg'),
     imageAlt: 'Dos personas trabajan juntas frente a una laptop, sentadas en un sillón azul.',
-    logo: asset('tec360-logo.png'),
-    logoAlt: 'TEC360',
+    logo: asset('aprendizaje-futuro-logo.png'),
+    logoAlt: 'Aprendizaje para el Futuro',
+    logoSize: { width: 1080, height: 225 },
     footer: '®2026',
   },
   {
